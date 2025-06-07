@@ -1,43 +1,25 @@
 import torch
+from omegaconf import DictConfig
 from torch import nn
 from torchvision import transforms
 
-CELEB_PATH = "./data/"
-IMAGE_SIZE = 150
-LATENT_DIM = 128
-image_dim = 3 * IMAGE_SIZE * IMAGE_SIZE  # 67500
-print(
-    "\nCELEB_PATH",
-    CELEB_PATH,
-    "IMAGE_SIZE",
-    IMAGE_SIZE,
-    "LATENT_DIM",
-    LATENT_DIM,
-    "image_dim",
-    image_dim,
-)
 
-celeb_transform = transforms.Compose(
-    [
-        transforms.Resize(IMAGE_SIZE, antialias=True),
-        transforms.CenterCrop(IMAGE_SIZE),
-        transforms.ToTensor(),
-    ]
-)  # used when transforming image to tensor
-
-celeb_transform1 = transforms.Compose(
-    [transforms.Resize(IMAGE_SIZE, antialias=True), transforms.CenterCrop(IMAGE_SIZE)]
-)  # used by decode method to transform final output
-
-
-class VAE(nn.Modlue):
-    def __init__(self):
+class VAE(nn.Module):
+    def __init__(self, cfg: DictConfig):
         super(VAE, self).__init__()
 
+        self.cfg = cfg
         hidden_dims = [32, 64, 128, 256, 512]
         self.final_dim = hidden_dims[-1]
         in_channels = 3
         modules = []
+
+        self.celeb_transform1 = transforms.Compose(
+            [
+                transforms.Resize(self.cfg["model"]["image_size"], antialias=True),
+                transforms.CenterCrop(self.cfg["model"]["image_size"]),
+            ]
+        )  # used by decode method to transform final output
 
         # Build Encoder
         for h_dim in hidden_dims:
@@ -57,15 +39,23 @@ class VAE(nn.Modlue):
             in_channels = h_dim
 
         self.encoder = nn.Sequential(*modules)
-        out = self.encoder(torch.rand(1, 3, IMAGE_SIZE, IMAGE_SIZE))
+        out = self.encoder(
+            torch.rand(
+                1, 3, self.cfg["model"]["image_size"], self.cfg["model"]["image_size"]
+            )
+        )
         self.size = out.shape[2]
-        self.fc_mu = nn.Linear(hidden_dims[-1] * self.size * self.size, LATENT_DIM)
-        self.fc_var = nn.Linear(hidden_dims[-1] * self.size * self.size, LATENT_DIM)
+        self.fc_mu = nn.Linear(
+            hidden_dims[-1] * self.size * self.size, self.cfg["model"]["latent_dim"]
+        )
+        self.fc_var = nn.Linear(
+            hidden_dims[-1] * self.size * self.size, self.cfg["model"]["latent_dim"]
+        )
 
         # Build Decoder
         modules = []
         self.decoder_input = nn.Linear(
-            LATENT_DIM, hidden_dims[-1] * self.size * self.size
+            self.cfg["model"]["latent_dim"], hidden_dims[-1] * self.size * self.size
         )
         hidden_dims.reverse()
 
@@ -119,7 +109,7 @@ class VAE(nn.Modlue):
         result = result.view(-1, self.final_dim, self.size, self.size)
         result = self.decoder(result)
         result = self.final_layer(result)
-        result = celeb_transform1(result)
+        result = self.celeb_transform1(result)
         result = torch.flatten(result, start_dim=1)
         result = torch.nan_to_num(result)
         return result

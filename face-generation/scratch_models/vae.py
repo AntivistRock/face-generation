@@ -30,7 +30,7 @@ celeb_transform1 = transforms.Compose(
 )  # used by decode method to transform final output
 
 
-class VAE(nn.Module):
+class VAE(nn.Modlue):
     def __init__(self):
         super(VAE, self).__init__()
 

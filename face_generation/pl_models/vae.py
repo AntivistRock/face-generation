@@ -3,8 +3,9 @@ import torch
 import torch.nn.functional as F
 import torchvision.utils as vutils
 from omegaconf import DictConfig
-from face_generation.scratch_models.vae import VAE as model_VAE
 from torchvision import transforms
+
+from face_generation.scratch_models.vae import VAE as model_VAE
 
 
 class VAE(pl.LightningModule):

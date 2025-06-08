@@ -1,9 +1,10 @@
 import hydra
 import pytorch_lightning as pl
 from omegaconf import DictConfig
+from pytorch_lightning.loggers import MLFlowLogger
+
 from face_generation.pl_data import create_data
 from face_generation.pl_models import create_model
-from pytorch_lightning.loggers import MLFlowLogger
 
 
 @hydra.main("../configs", "main", version_base="1.3")
@@ -21,7 +22,9 @@ def train(cfg: DictConfig):
         )
     ]
 
-    trainer = pl.Trainer(accelerator="cuda", logger=mlf_logger, callbacks=callbacks, max_epochs=3)
+    trainer = pl.Trainer(
+        accelerator="cuda", logger=mlf_logger, callbacks=callbacks, max_epochs=3
+    )
     trainer.fit(model, dm)
 
 

@@ -1,7 +1,8 @@
+from pathlib import Path
+
 import fire
 import numpy as np
 from numpy.typing import ArrayLike
-from pathlib import Path
 
 
 def move_files(files: ArrayLike, target_folder: Path):

@@ -15,11 +15,9 @@ def train(cfg: DictConfig):
     model = create_model(cfg)
     dm = create_data(cfg)
 
-    callbacks=[
+    callbacks = [
         pl.callbacks.ModelCheckpoint(
-            dirpath="./mlruns/checkpoints",
-            save_top_k=3,
-            monitor="test_loss"
+            dirpath="./mlruns/checkpoints", save_top_k=3, monitor="test_loss"
         )
     ]
 

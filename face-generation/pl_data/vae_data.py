@@ -1,11 +1,12 @@
+import os
+from pathlib import Path
+
 import pytorch_lightning as pl
 from dvc.repo import Repo
 from omegaconf import DictConfig
 from torch.utils.data import DataLoader
 from torchvision import transforms
 from torchvision.datasets import ImageFolder
-import os
-from pathlib import Path
 
 
 class VAEDataModule(pl.LightningDataModule):
@@ -21,7 +22,6 @@ class VAEDataModule(pl.LightningDataModule):
         )  # used when transforming image to tensor
 
     def prepare_data(self):
-        return
         repo = Repo(".")
         repo.pull()
 

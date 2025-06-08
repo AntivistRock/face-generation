@@ -24,11 +24,11 @@ class VAEDataModule(pl.LightningDataModule):
 
     def setup(self, stage):
         self.train_dataset = ImageFolder(
-            self.cfg["data"]["train_path"],
+            self.cfg["data_conf"]["train_path"],
             transform=self.celeb_transform,
         )
         self.val_dataset = ImageFolder(
-            self.cfg["data"]["val_path"],
+            self.cfg["data_conf"]["val_path"],
             transform=self.celeb_transform,
         )
 

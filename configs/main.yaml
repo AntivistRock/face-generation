@@ -1,4 +1,4 @@
 defaults:
   - model: vae
   - logging: logging
-  - data: data
+  - data: data_conf

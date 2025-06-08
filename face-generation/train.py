@@ -15,7 +15,15 @@ def train(cfg: DictConfig):
     model = create_model(cfg)
     dm = create_data(cfg)
 
-    trainer = pl.Trainer(accelerator="cuda", devices=1, logger=mlf_logger)
+    callbacks=[
+        pl.callbacks.ModelCheckpoint(
+            dirpath="./mlruns/checkpoints",
+            save_top_k=3,
+            monitor="test_loss"
+        )
+    ]
+
+    trainer = pl.Trainer(accelerator="cuda", logger=mlf_logger, callbacks=callbacks)
     trainer.fit(model, dm)
 
 

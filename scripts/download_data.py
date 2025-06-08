@@ -32,4 +32,4 @@ if __name__ == "__main__":
     fire.Fire(download_and_extract)
 
 
-# https://www.dropbox.com/scl/fi/rqqn0sgtvltl168ruvoqd/img_align_celeba.zip?rlkey=oko4n2el46lezasokbinmv4vb&st=xuom4pui&dl=0
+# https://www.dropbox.com/scl/fi/di9wevuxwd4ks0cvhk0lg/img_align_celeba.zip?rlkey=yzi4rakarun7fxj8yl0oy5v6t&st=8demnpch&dl=0

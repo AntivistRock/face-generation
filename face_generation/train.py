@@ -16,6 +16,18 @@ def train(cfg: DictConfig):
     model = create_model(cfg)
     dm = create_data(cfg)
 
+    hyperparams = {
+        "model type": cfg["model"]["model_type"],
+        "latent dim": cfg["model"]["latent_dim"],
+        "image size": cfg["model"]["image_size"],
+        "epochs": cfg["model"]["epochs"],
+        "batch size": cfg["model"]["batch_size"],
+        "image_mean": cfg["model"]["image_mean"],
+        "image_std": cfg["model"]["image_std"],
+    }
+
+    mlf_logger.log_hyperparams(hyperparams)
+
     callbacks = [
         pl.callbacks.ModelCheckpoint(
             dirpath="./plots/checkpoints", save_top_k=1, monitor="test_loss"
@@ -23,7 +35,10 @@ def train(cfg: DictConfig):
     ]
 
     trainer = pl.Trainer(
-        accelerator="cuda", logger=mlf_logger, callbacks=callbacks, max_epochs=3
+        accelerator="cuda",
+        logger=mlf_logger,
+        callbacks=callbacks,
+        max_epochs=cfg["model"]["epochs"],
     )
     trainer.fit(model, dm)
 

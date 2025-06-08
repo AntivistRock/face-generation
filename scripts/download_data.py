@@ -8,7 +8,8 @@ def download_and_extract(target_dir: str) -> None:
     and deletes the ZIP file after extraction.
     """
 
-    url = "https://www.dropbox.com/scl/fi/di9wevuxwd4ks0cvhk0lg/img_align_celeba.zip?rlkey=yzi4rakarun7fxj8yl0oy5v6t&st=8demnpch&dl=0"
+    url = "https://www.dropbox.com/scl/fi/di9wevuxwd4ks0cvhk0lg/\
+        img_align_celeba.zip?rlkey=yzi4rakarun7fxj8yl0oy5v6t&st=8demnpch&dl=0"
 
     os.makedirs(target_dir, exist_ok=True)
 

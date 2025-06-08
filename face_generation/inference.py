@@ -5,7 +5,6 @@ import torch
 from omegaconf import DictConfig
 from torchvision.utils import save_image
 
-from face_generation.pl_models import create_model
 from face_generation.pl_models.vae import VAE
 
 

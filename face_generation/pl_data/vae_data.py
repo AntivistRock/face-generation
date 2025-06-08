@@ -1,6 +1,3 @@
-import os
-from pathlib import Path
-
 import pytorch_lightning as pl
 from dvc.repo import Repo
 from omegaconf import DictConfig
@@ -26,13 +23,12 @@ class VAEDataModule(pl.LightningDataModule):
         repo.pull()
 
     def setup(self, stage):
-        repo_path = Path(os.getcwd()).parent
         self.train_dataset = ImageFolder(
-            repo_path / self.cfg["data"]["train_path"],
+            self.cfg["data"]["train_path"],
             transform=self.celeb_transform,
         )
         self.val_dataset = ImageFolder(
-            repo_path / self.cfg["data"]["val_path"],
+            self.cfg["data"]["val_path"],
             transform=self.celeb_transform,
         )
 
@@ -43,5 +39,5 @@ class VAEDataModule(pl.LightningDataModule):
 
     def val_dataloader(self):
         return DataLoader(
-            self.val_dataset, batch_size=self.cfg["model"]["batch_size"], shuffle=True
+            self.val_dataset, batch_size=self.cfg["model"]["batch_size"], shuffle=False
         )

@@ -3,10 +3,12 @@ import os
 import fire
 
 
-def download_and_extract(url: str, target_dir: str) -> None:
+def download_and_extract(target_dir: str) -> None:
     """Downloads a ZIP file from a URL using wget, extracts it using unzip,
     and deletes the ZIP file after extraction.
     """
+
+    url = "https://www.dropbox.com/scl/fi/di9wevuxwd4ks0cvhk0lg/img_align_celeba.zip?rlkey=yzi4rakarun7fxj8yl0oy5v6t&st=8demnpch&dl=0"
 
     os.makedirs(target_dir, exist_ok=True)
 
@@ -30,6 +32,3 @@ def check_dataset_size():
 
 if __name__ == "__main__":
     fire.Fire(download_and_extract)
-
-
-# https://www.dropbox.com/scl/fi/di9wevuxwd4ks0cvhk0lg/img_align_celeba.zip?rlkey=yzi4rakarun7fxj8yl0oy5v6t&st=8demnpch&dl=0

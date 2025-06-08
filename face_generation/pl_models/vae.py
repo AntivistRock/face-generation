@@ -3,7 +3,7 @@ import torch
 import torch.nn.functional as F
 import torchvision.utils as vutils
 from omegaconf import DictConfig
-from scratch_models.vae import VAE as model_VAE
+from face_generation.scratch_models.vae import VAE as model_VAE
 from torchvision import transforms
 
 

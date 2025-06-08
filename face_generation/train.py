@@ -1,8 +1,8 @@
 import hydra
 import pytorch_lightning as pl
 from omegaconf import DictConfig
-from pl_data import create_data
-from pl_models import create_model
+from face_generation.pl_data import create_data
+from face_generation.pl_models import create_model
 from pytorch_lightning.loggers import MLFlowLogger
 
 
@@ -17,11 +17,11 @@ def train(cfg: DictConfig):
 
     callbacks = [
         pl.callbacks.ModelCheckpoint(
-            dirpath="../plots/checkpoints", save_top_k=1, monitor="test_loss"
+            dirpath="./plots/checkpoints", save_top_k=1, monitor="test_loss"
         )
     ]
 
-    trainer = pl.Trainer(accelerator="cuda", logger=mlf_logger, callbacks=callbacks)
+    trainer = pl.Trainer(accelerator="cuda", logger=mlf_logger, callbacks=callbacks, max_epochs=3)
     trainer.fit(model, dm)
 
 

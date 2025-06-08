@@ -1,5 +1,5 @@
-from pl_models import create_model
-from pl_models.vae import VAE
+from face_generation.pl_models import create_model
+from face_generation.pl_models.vae import VAE
 from pathlib import Path
 import torch
 from omegaconf import DictConfig
@@ -14,7 +14,7 @@ def load_model(logs_path: Path, cfg: DictConfig):
     return pl_model.model
 
 
-@hydra.main('../configs', 'main')
+@hydra.main('../configs', 'main', version_base="1.3")
 def inference(cfg: DictConfig):
     logs_path = Path(__file__).parent.parent / "plots"
     model = load_model(logs_path, cfg)

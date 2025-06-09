@@ -1,3 +1,4 @@
+from dvc.repo import Repo
 import hydra
 import pytorch_lightning as pl
 from omegaconf import DictConfig
@@ -30,7 +31,8 @@ def train(cfg: DictConfig):
 
     callbacks = [
         pl.callbacks.ModelCheckpoint(
-            dirpath="./plots/checkpoints", save_top_k=1, monitor="test_loss"
+            dirpath=cfg["data_conf"]["checkpoint_path"],
+            save_top_k=1, monitor="test_loss"
         )
     ]
 
@@ -41,6 +43,10 @@ def train(cfg: DictConfig):
         max_epochs=cfg["model"]["epochs"],
     )
     trainer.fit(model, dm)
+
+    repo = Repo(".")
+    repo.add(cfg["data_conf"]["checkpoint_path"])
+    repo.push(targets=[cfg["data_conf"]["checkpoint_path"]], remote="models")
 
 
 if __name__ == "__main__":

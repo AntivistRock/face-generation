@@ -1,2 +1,3 @@
 train_path: data/train
 val_path: data/val
+checkpoint_path: checkpoints

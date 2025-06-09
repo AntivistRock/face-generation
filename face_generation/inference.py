@@ -14,7 +14,10 @@ def load_model(cfg: DictConfig):
     repo = Repo(".")
     repo.pull(targets=[cfg["data_conf"]["checkpoint_path"]], remote="models")
 
-    ckpt = list(ckpts_path.iterdir())[0]
+    ckpts = list(ckpts_path.iterdir())
+    ckpts.sort(reverse=True)
+    ckpt = ckpts[0]
+
     pl_model = VAE.load_from_checkpoint(ckpt, cfg=cfg)
     return pl_model.model
 

@@ -20,7 +20,13 @@ class VAEDataModule(pl.LightningDataModule):
 
     def prepare_data(self):
         repo = Repo(".")
-        repo.pull()
+        repo.pull(
+            targets=[
+                self.cfg["data_conf"]["train_path"],
+                self.cfg["data_conf"]["val_path"],
+            ],
+            remote="data",
+        )
 
     def setup(self, stage):
         self.train_dataset = ImageFolder(

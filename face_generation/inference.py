@@ -1,8 +1,8 @@
-from dvc.repo import Repo
 from pathlib import Path
 
 import hydra
 import torch
+from dvc.repo import Repo
 from omegaconf import DictConfig
 from torchvision.utils import save_image
 
@@ -11,8 +11,8 @@ from face_generation.pl_models.vae import VAE
 
 def load_model(cfg: DictConfig):
     ckpts_path = Path("checkpoints")
-    repo = Repo('.')
-    repo.pull(targets=[cfg["data_conf"]["checkpoint_path"]], remote='models')
+    repo = Repo(".")
+    repo.pull(targets=[cfg["data_conf"]["checkpoint_path"]], remote="models")
 
     ckpt = list(ckpts_path.iterdir())[0]
     pl_model = VAE.load_from_checkpoint(ckpt, cfg=cfg)

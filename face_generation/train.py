@@ -1,6 +1,6 @@
-from dvc.repo import Repo
 import hydra
 import pytorch_lightning as pl
+from dvc.repo import Repo
 from omegaconf import DictConfig
 from pytorch_lightning.loggers import MLFlowLogger
 
@@ -32,7 +32,8 @@ def train(cfg: DictConfig):
     callbacks = [
         pl.callbacks.ModelCheckpoint(
             dirpath=cfg["data_conf"]["checkpoint_path"],
-            save_top_k=1, monitor="test_loss"
+            save_top_k=1,
+            monitor="test_loss",
         )
     ]
 

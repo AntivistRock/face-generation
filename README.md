@@ -40,13 +40,16 @@ RGB изображения размера 150x150 пикс. лиц людей.
 ## Моделирование
 
 ### Бейзлайн
-Классический пример GAN - Deep Convolutional GAN (DCGAN). Пример генерации обученного DCGAN:
+
+Классический пример GAN - Deep Convolutional GAN (DCGAN). Пример генерации
+обученного DCGAN:
 <img src="readme_imgs/gan_example.png" alt="gan_example" width="400"/>
 
 ### Основная модель
-Вариационный автокодировщик. Пример генерации рассматриваемой моделью после обучения на двух эпохах: 
-<img src="readme_imgs/gen_example.png" alt="vae_example" width="200"/>
 
+Вариационный автокодировщик. Пример генерации рассматриваемой моделью после
+обучения на двух эпохах:
+<img src="readme_imgs/gen_example.png" alt="vae_example" width="200"/>
 
 ## Setup
 
